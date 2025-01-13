@@ -134,13 +134,18 @@ function closeQRCodeScanner() {
 
 
 startScanButton.addEventListener("click", async () => {
+    startQRCodeScanner(user);
     const users = await userDataApiFetch();
     const user = users[0]; 
-    idtext.innerHTML = user.uniqecode;
+    
     
 });
 
+
+closeScanButton.addEventListener("click", closeQRCodeScanner);
+
+
+    idtext.innerHTML = user.uniqecode;
     rangFunc(user.totalNum);
     generateQRCode(user.uniqecode);
-    startQRCodeScanner(user);
-closeScanButton.addEventListener("click", closeQRCodeScanner);
+    
