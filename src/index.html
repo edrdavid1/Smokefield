@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smoke</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="topbar">
+        <text id="rang">Рядовой</text>
+        <button id="menuBut">
+            <svg width="24px" height="24px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path fill="#000000" fill-rule="evenodd" d="M19 4a1 1 0 01-1 1H2a1 1 0 010-2h16a1 1 0 011 1zm0 6a1 1 0 01-1 1H2a1 1 0 110-2h16a1 1 0 011 1zm-1 7a1 1 0 100-2H2a1 1 0 100 2h16z"/>
+              </svg>
+        </button>
+    </div>
+    <div id="page">
+        <div id="number">
+            <h2 id="actualscore">12</h2>
+            <text id="Text1">Текущий счет</text>
+        </div>
+        <div id="qrContener">
+            <div id="qrcode"></div>
+        </div>
+        <h3 id="id"></h3>
+        <button id="startScanButton">Стрельнуть</button>
+        <!-- Элемент для паказу відэа з камеры -->
+        <div id="qr-code-scanner" style="display:none;"></div> 
+        <button id="closeScanButton" style="display:none;">Закрыць сканер</button>
+
+    </div>
+    <script src="libs/html5-qrcode.min.js"></script>
+    <script src="libs/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

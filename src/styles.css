@@ -1,0 +1,93 @@
+#page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+#number{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#qrcode {
+    width:160px;
+    height:160px;
+    margin-top:15px;
+  }
+
+#actualscore{
+    margin-bottom: 0;
+}
+#topbar{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#menuBut{
+    background-color: transparent;
+    border: none;
+
+}
+
+/* Стыль для контейнера сканера */
+#qr-code-scanner {
+    position: relative;
+    width: 100%;
+    max-width: 500px;  /* Абмежаванне максімальнай шырыні */
+    height: 300px;     /* Высота для відэа */
+    margin: 20px auto; /* Выроўніць па цэнтры */
+    background-color: black; /* Фон чорны для камеры */
+}
+
+/* Стыль для камеры (відэа) */
+#qr-code-scanner video {
+    width: 100%;    /* Шырыня відэа павінна быць 100% ад кантэйнера */
+    height: 100%;   /* Вышыня відэа адпавядае кантэйнеру */
+    object-fit: cover; /* Падгонка відэа для запаўнення кантэйнера без перакручвання */
+}
+
+/* Стыль для зоны для сканавання (квадрат) */
+#qr-code-scanner::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    height: 250px;
+    background: rgba(0, 255, 0, 0.5); /* Зялёны колер для зоны сканавання */
+    border: 2px solid #00ff00;  /* Граніца зялёнага колеру */
+    transform: translate(-50%, -50%);  /* Выроўніць з цэнтрам */
+    z-index: 10; /* Упэўніцеся, што квадрат будзе над відэа */
+}
+
+/* Дадайце стылі для кнопкі, калі сканер актыўны */
+#startScanButton {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#startScanButton:hover {
+    background-color: #0056b3;
+}
+
+#closeScanButton {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #dc3545; /* Чырвоны фон */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#closeScanButton:hover {
+    background-color: #c82333;
+}
+
