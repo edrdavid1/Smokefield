@@ -4,12 +4,17 @@ const rangtext = document.getElementById("rang");
 const startScanButton = document.getElementById("startScanButton");
 const closeScanButton = document.getElementById("closeScanButton");
 const scannerContainer = document.getElementById("qr-code-scanner");
+const actualscore = document.getElementById("actualscore");
 
 let html5QrCode; 
 
-const userDataApiFetch = async () => {
+const username = localStorage.getItem('username');
+
+console.log(username);
+
+const userDataApiFetch = async (username) => {
     try {
-        const response = await fetch("http://localhost:3000/userdata");
+        const response = await fetch(`http://localhost:3000/userdata/${username}`);
         if (!response.ok) {
             throw new Error(`HTTP памылка! статус: ${response.status}`);
         }
@@ -20,6 +25,7 @@ const userDataApiFetch = async () => {
         throw error;
     }
 };
+
 
 const rangFunc = (total) => {
     if (total < 0) {
@@ -33,10 +39,10 @@ const rangFunc = (total) => {
     }
 };
 
-function sendBumData(user, newCurrentNum, ggId) {
+function sendBumData(user, ggId) {
     const dataToSend = {
-        uniqecode: user.uniqecode,
-        newCurrentNum: newCurrentNum
+        userGG: ggId,
+        userBB: user
     };
 
     return fetch("http://localhost:3000/updateuser", {
@@ -62,9 +68,9 @@ function sendBumData(user, newCurrentNum, ggId) {
     });
 }
 
-const bumСigarette = (decodedText, user) => {
-    const newCurrentNum = user.currentNum - 1; 
-    sendBumData(user, newCurrentNum, decodedText);
+const bumСigarette = (decodedText, username) => {
+    
+    sendBumData(username, decodedText);
     user.currentNum = newCurrentNum; 
 };
 
@@ -97,8 +103,9 @@ function startQRCodeScanner(user) {
         { fps: 10, qrbox: 250 },
         (decodedText) => {
             console.log("Сканаваны тэкст:", decodedText);
-            bumСigarette(decodedText, user); 
             stopQRCodeScanner();
+            bumСigarette(decodedText, username); 
+            
         },
         (errorMessage) => {
             console.error("Памылка сканавання:", errorMessage);
@@ -129,8 +136,9 @@ function closeQRCodeScanner() {
 }
 
 
+
 startScanButton.addEventListener("click", async () => {
-    const users = await userDataApiFetch();
+    const users = await userDataApiFetch(username);
     const user = users[0];
     startQRCodeScanner(user);
 });
@@ -141,13 +149,18 @@ closeScanButton.addEventListener("click", closeQRCodeScanner);
 
 // Ініцыялізацыя пачатковых дадзеных
 async function initializeUserData() {
-    const users = await userDataApiFetch();
-    const user = users[0];
-    
-    idtext.innerHTML = user.uniqecode;
-    rangFunc(user.totalNum);
-    generateQRCode(user.uniqecode);
+    try {
+        const user = await userDataApiFetch(username);
+         actualscore.innerHTML = user.currentNum; // Выкарыстоўвайце user, а не users
+        idtext.innerHTML = user.uniqecode; // Упэўніцеся, што user мае поле uniqecode
+        rangFunc(user.totalNum); // Упэўніцеся, што user мае поле totalNum
+        generateQRCode(user.uniqecode); // Генерацыя QR кода
+    } catch (error) {
+        console.error("Памылка ініцыялізацыі дадзеных карыстальніка:", error);
+    }
 }
+
+initializeUserData();
 
 // Выклікаем ініцыялізацыю пры загрузцы
 initializeUserData();
