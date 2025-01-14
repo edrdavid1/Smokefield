@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login and Registration</title>
+    <link rel="stylesheet" href="loginpage.css"> 
 </head>
 <body>
 
-    <h2>Login</h2>
     <form id="loginForm">
-        <label for="loginUsername">Username:</label>
-        <input type="text" id="loginUsername" required><br><br> <!-- Username, не email -->
-        <label for="loginPassword">Password:</label>
-        <input type="password" id="loginPassword" required><br><br>
-        <button type="submit">Login</button>
+        
+        <input type="text" id="loginUsername" required placeholder="Username">
+        <input type="password" id="loginPassword" required placeholder="Password">
+        <button id="submit" type="submit">Login</button>
     </form>
+    <button id="registration" onclick="window.location.href = 'registerpage.html'">Register</button>
 
     <script src="loginpage.js"></script>
 </body>

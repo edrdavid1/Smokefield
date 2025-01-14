@@ -1,0 +1,118 @@
+/* registerpage.css */
+@font-face {
+    font-family: 'Operation Napalm';  /* Назва шрыфта */
+    src: url('./assets/OperationNapalm-nRBWO.ttf') format('truetype');  /* Шлях да файла шрыфта */
+}
+
+/* Агульныя стылі */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #939B62;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Формы */
+form {
+    background-color: transparent;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 85%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #fafafa;
+    border-radius: 0;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+button {
+    font-family: 'Operation Napalm', sans-serif;
+    display: block;
+    margin: 0;
+    padding: 10px 20px;
+    background-color: #523906;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: xx-large;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Кнопка ўваходу */
+button[type="button"] {
+    font-family: 'Operation Napalm', sans-serif;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #523906;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: xx-large;
+}
+
+button[type="button"]:hover {
+    background-color: #0056b3;
+}
+
+/* Адаптацыя пад тэлефон */
+body {
+    padding: 0 15px;
+}
+
+form {
+    width: 100%;
+    padding: 25px;
+}
+
+input[type="text"], input[type="email"], input[type="password"], button {
+    font-size: 1.1rem;
+    padding: 12px;
+}
+
+button {
+    margin-top: 20px;
+}
+
+#loginBut{
+    margin: 0;
+    background-color: transparent;
+    color: black;
+}

@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login and Registration</title>
+    <link rel="stylesheet" href="registerpage.css">
 </head>
 <body>
 
     <!-- Форма рэгістрацыі -->
-    <h2>Register</h2>
+   
     <form id="registerForm">
-        <label for="registerName">Name:</label>
-        <input type="text" id="registerName" required><br><br>
-        <label for="registerEmail">Email:</label>
-        <input type="email" id="registerEmail" required><br><br>
-        <label for="registerPassword">Password:</label>
-        <input type="password" id="registerPassword" required><br><br>
+        <input type="text" id="registerName" required placeholder="Name">
+       
+        <input type="email" id="registerEmail" required placeholder="Email">
+
+        <input type="password" id="registerPassword" required placeholder="Password">
         <button type="submit">Register</button>
     </form>
 
-
+    <button  id="loginBut" onclick="window.location.href = 'loginpage.html'">Login</button>
     <script src="registerpage.js"></script>
 </body>
 </html>

@@ -1,3 +1,43 @@
+@font-face {
+    font-family: 'Operation Napalm';  /* Назва шрыфта, якую вы будзеце выкарыстоўваць */
+    src: url('./assets/OperationNapalm-nRBWO.ttf') format('truetype');  /* Шлях да файла шрыфта */
+}
+
+
+
+body{
+    background-color: #939B62;
+
+}
+
+#text1{
+    
+    font-size: x-large;
+    margin: 5%;
+
+}
+
+
+#id{
+    font-family: 'Operation Napalm', sans-serif;
+    font-size: xxx-large;
+    margin: 5%;
+    margin-bottom: 1%;
+}
+
+#logoutBut{
+    border: none;
+    background-color: transparent;
+}
+
+#actualscore{
+    font-size: 8ch;
+    margin: 20%;
+}
+#rang{
+    font-family: 'Operation Napalm', sans-serif;
+    font-size: x-large;
+}
 #page{
     display: flex;
     flex-direction: column;
@@ -7,11 +47,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Operation Napalm', sans-serif;
 }
 #qrcode {
-    width:160px;
-    height:160px;
+    width:300px;
+    height:300px;
     margin-top:15px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
 #actualscore{
@@ -62,14 +107,27 @@
 
 /* Дадайце стылі для кнопкі, калі сканер актыўны */
 #startScanButton {
+    font-family: 'Operation Napalm', sans-serif;
     display: block;
-    margin: 10px auto;
+    margin: 20px auto;
     padding: 10px 20px;
-    background-color: #007BFF;
+    background-color: #523906;
     color: white;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
+    font-size: xx-large;
+}
+
+#closeScanButton{
+    font-family: 'Operation Napalm', sans-serif;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #523906;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: xx-large;
 }
 
 #startScanButton:hover {
