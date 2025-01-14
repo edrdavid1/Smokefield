@@ -22,7 +22,7 @@ console.log(username);
 
 const userDataApiFetch = async (username) => {
     try {
-        const response = await fetch(`http://localhost:3000/userdata/${username}`);
+        const response = await fetch(`https://smokefieldserver.onrender.com/userdata/${username}`);
         if (!response.ok) {
             throw new Error(`HTTP памылка! статус: ${response.status}`);
         }
@@ -172,7 +172,7 @@ function sendBumData(user, ggId) {
         userBB: user
     };
 
-    return fetch("http://localhost:3000/updateuser", {
+    return fetch("https://smokefieldserver.onrender.com/updateuser", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -215,7 +215,8 @@ function bumСigarette(decodedText, username) {
 let socket; 
 
 function setupWebSocket(userId) {
-    socket = new WebSocket("ws://localhost:3001");
+    socket = new WebSocket("wss://smokefieldserver.onrender.com");
+
 
     socket.onopen = () => {
         console.log("WebSocket падключаны.");

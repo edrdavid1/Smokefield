@@ -5,7 +5,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     const password = document.getElementById("loginPassword").value;
 
     try {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch('https://smokefieldserver.onrender.com/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
