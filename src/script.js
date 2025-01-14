@@ -9,16 +9,15 @@ let html5QrCode;
 
 const userDataApiFetch = async () => {
     try {
-        const response = await fetch("https://api.example.com/userdata"); // URL нашего сервера
+        const response = await fetch("http://localhost:3000/userdata");
+        if (!response.ok) {
+            throw new Error(`HTTP памылка! статус: ${response.status}`);
+        }
         const userData = await response.json();
-        return userData.map(user => ({
-            name: user.name,
-            uniqecode: user.uniqecode,
-            currentNum: user.currentNum,
-            totalNum: user.totalNum,
-        }));
+        return userData;
     } catch (error) {
-        console.error("Fetch user data failed:", error);
+        console.error("Памылка атрымання дадзеных:", error);
+        throw error;
     }
 };
 
@@ -36,34 +35,31 @@ const rangFunc = (total) => {
 
 function sendBumData(user, newCurrentNum, ggId) {
     const dataToSend = {
-        myData: {
-            unquecod: user.uniqecode,
-            newCurrentNum: newCurrentNum,
-        },
-        ggData: {
-            ggId: ggId,
-        },
+        uniqecode: user.uniqecode,
+        newCurrentNum: newCurrentNum
     };
 
-    return fetch("https://api.example.com/test", { // URL нашего сервера
+    return fetch("http://localhost:3000/updateuser", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(dataToSend),
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Памылка сервера: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Адказ сервера:", data);
-        })
-        .catch(error => {
-            console.error("Памылка запыту:", error);
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Памылка сервера: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Адказ сервера:", data);
+        return data;
+    })
+    .catch(error => {
+        console.error("Памылка запыту:", error);
+        throw error;
+    });
 }
 
 const bumСigarette = (decodedText, user) => {
@@ -134,18 +130,25 @@ function closeQRCodeScanner() {
 
 
 startScanButton.addEventListener("click", async () => {
-    startQRCodeScanner(user);
     const users = await userDataApiFetch();
-    const user = users[0]; 
-    
-    
+    const user = users[0];
+    startQRCodeScanner(user);
 });
 
 
 closeScanButton.addEventListener("click", closeQRCodeScanner);
 
 
+// Ініцыялізацыя пачатковых дадзеных
+async function initializeUserData() {
+    const users = await userDataApiFetch();
+    const user = users[0];
+    
     idtext.innerHTML = user.uniqecode;
     rangFunc(user.totalNum);
     generateQRCode(user.uniqecode);
+}
+
+// Выклікаем ініцыялізацыю пры загрузцы
+initializeUserData();
     
