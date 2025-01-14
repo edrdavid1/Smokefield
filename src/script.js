@@ -7,11 +7,13 @@ const scannerContainer = document.getElementById("qr-code-scanner");
 const actualscore = document.getElementById("actualscore");
 const logoutBut = document.getElementById("logoutBut");
 
+
 let html5QrCode; 
+
 
 logoutBut.addEventListener("click", () => {
     localStorage.removeItem('username');
-    window.location.href = 'loginpage.html';
+    window.location.href = 'index.html';
 });
 
 const username = localStorage.getItem('username');

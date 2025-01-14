@@ -18,7 +18,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         const data = await response.json();
 
         if (response.ok) {
-            window.location.href = 'loginpage.html'
+            window.location.href = 'index.html'
             alert('Registration successful! Please check your email to confirm your account.');
             
         } else {

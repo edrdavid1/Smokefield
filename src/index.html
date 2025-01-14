@@ -3,45 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smoke</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Login and Registration</title>
+    <link rel="stylesheet" href="loginpage.css"> 
 </head>
 <body>
-    <div id="topbar">
-        
-        <button id="menuBut">
-            <svg width="42px" height="42px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
-                <path fill="#000000" fill-rule="evenodd" d="M19 4a1 1 0 01-1 1H2a1 1 0 010-2h16a1 1 0 011 1zm0 6a1 1 0 01-1 1H2a1 1 0 110-2h16a1 1 0 011 1zm-1 7a1 1 0 100-2H2a1 1 0 100 2h16z"/>
-              </svg>
-        </button>
-        <button id="logoutBut">
-            <svg fill="#000000" height="42px" width="42px" version="1.1" id="XMLID_173_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 26" xml:space="preserve">
-                <g id="logout">
-                    <g>
-                        <path d="M15,24H0V2h15v8h-2V4H2v18h11v-6h2V24z M18.4,18.7L17,17.3l3.3-3.3H5v-2h15.3L17,8.7l1.4-1.4L24,13L18.4,18.7z"/>
-                    </g>
-                </g>
-                </svg>
-        </button>
-    </div>
-    <div id="page">
-        <div id="number">
-            <h2 id="actualscore">12</h2>
-            <text id="text1">Обойма</text>
-        </div>
-        <div id="qrContener">
-            <div id="qrcode"></div>
-        </div>
-        <h3 id="id"></h3>
-        <text id="rang"></text>
-        <button id="startScanButton">Стрельнуть</button>
-        <!-- Элемент для паказу відэа з камеры -->
-        <div id="qr-code-scanner" style="display:none;"></div> 
-        <button id="closeScanButton" style="display:none;">Закрыць сканер</button>
 
-    </div>
-    <script src="libs/html5-qrcode.min.js"></script>
-    <script src="libs/qrcode.min.js"></script>
-    <script src="script.js"></script>
+    <form id="loginForm">
+        
+        <input type="text" id="loginUsername" required placeholder="Username">
+        <input type="password" id="loginPassword" required placeholder="Password">
+        <button id="submit" type="submit">Login</button>
+    </form>
+    <button id="registration" onclick="window.location.href = 'registerpage.html'">Register</button>
+
+    <script src="loginpage.js"></script>
 </body>
 </html>
