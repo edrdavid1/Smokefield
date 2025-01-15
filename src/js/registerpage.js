@@ -1,4 +1,4 @@
-let registeredEmail = "";  // Дадаць змянную для захоўвання email
+let registeredEmail = ""; // Дадаем глабальную зменную для захоўвання email
 
 document.getElementById("registerForm").addEventListener("submit", async function (event) {
     event.preventDefault();
@@ -9,11 +9,11 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     const password = document.getElementById("registerPassword").value;
 
     if (!username || !name || !email || !password) {
-        alert("Please fill in all fields.");
+      
         return;
     }
 
-    registeredEmail = email;  // Захоўваем email
+    registeredEmail = email;  // Захоўваем email у глабальную зменную
 
     try {
         const response = await fetch('https://smokefieldserver.onrender.com/register', {
@@ -27,8 +27,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         const data = await response.json();
 
         if (response.ok) {
-            alert('Registration successful! Please check your email to confirm your account.');
-            
+           
             // Паказваем акно для ўводу кода
             document.getElementById("registerForm").style.display = 'none';
             document.getElementById("confirmationCodeSection").style.display = 'block';
@@ -37,7 +36,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         }
     } catch (error) {
         console.error('Error during registration:', error);
-        alert('Error during registration. Please try again.');
+      
     }
 });
 
@@ -45,17 +44,18 @@ document.getElementById("confirmEmailButton").addEventListener("click", async fu
     const confirmationCode = document.getElementById("confirmationCode").value;
 
     if (!confirmationCode) {
-        alert("Please enter the confirmation code.");
+      
         return;
     }
 
+    console.log(registeredEmail, confirmationCode);
     try {
         const response = await fetch('https://smokefieldserver.onrender.com/confirm-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: registeredEmail, confirmationCode })  // Выкарыстоўваем захаваны email
+            body: JSON.stringify({ email: registeredEmail, confirmationCode }) // Выкарыстоўваем захаваны email
         });
 
         const data = await response.json();
@@ -64,10 +64,11 @@ document.getElementById("confirmEmailButton").addEventListener("click", async fu
             alert('Email confirmed successfully!');
             window.location.href = 'index.html';
         } else {
-            alert(data.message || 'Failed to confirm email. Please try again.');
+           
+            console.log(registeredEmail, confirmationCode);
         }
     } catch (error) {
         console.error('Error during email confirmation:', error);
-        alert('Error during email confirmation. Please try again.');
+       
     }
 });

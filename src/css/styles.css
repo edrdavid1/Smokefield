@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Operation Napalm';  /* Назва шрыфта, якую вы будзеце выкарыстоўваць */
-    src: url('./assets/OperationNapalm-nRBWO.ttf') format('truetype');  /* Шлях да файла шрыфта */
+    src: url('../assets/OperationNapalm-nRBWO.ttf') format('truetype');  /* Шлях да файла шрыфта */
 }
 
 

@@ -1,7 +1,7 @@
 /* registerpage.css */
 @font-face {
     font-family: 'Operation Napalm';  /* Назва шрыфта */
-    src: url('./assets/OperationNapalm-nRBWO.ttf') format('truetype');  /* Шлях да файла шрыфта */
+    src: url('../assets/OperationNapalm-nRBWO.ttf') format('truetype');  /* Шлях да файла шрыфта */
 }
 
 /* Агульныя стылі */

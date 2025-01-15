@@ -13,7 +13,7 @@ let html5QrCode;
 
 logoutBut.addEventListener("click", () => {
     localStorage.removeItem('username');
-    window.location.href = 'index.html';
+    window.location.href = '../page/index.html';
 });
 
 const username = localStorage.getItem('username');
