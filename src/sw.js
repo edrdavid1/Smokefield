@@ -1,16 +1,16 @@
 const CACHE_NAME = "pwa-cache-v1";
 const ASSETS = [
     "/",
-    "/src/page/index.html",
-    "/src/page/registerpage.html",
-    "/src/page/base.html",
-    "/src/css/loginpage.css",
-    "/src/css/registerpage.css",
-    "/src/css/styles.css",
-    "/src/js/loginpage.js",
-    "/src/js/registerpage.js",
-    "/src/js/script.js",
-    "/src/assets/OperationNapalm-nRBWO.ttf"
+    "/page/index.html",
+    "/page/registerpage.html",
+    "/page/base.html",
+    "/css/loginpage.css",
+    "/css/registerpage.css",
+    "/css/styles.css",
+    "/js/loginpage.js",
+    "/js/registerpage.js",
+    "/js/script.js",
+    "/assets/OperationNapalm-nRBWO.ttf"
 ];
 
 // Усталёўка Service Worker
@@ -27,7 +27,7 @@ self.addEventListener("install", (event) => {
 // Перанакіраванне на loginpage.html
 self.addEventListener("fetch", (event) => {
     if (event.request.mode === "navigate" && event.request.url.endsWith("/")) {
-        event.respondWith(caches.match("/src/page/index.html"));
+        event.respondWith(caches.match("/page/index.html"));
     } else {
         event.respondWith(
             caches.match(event.request).then((response) => {
