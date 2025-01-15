@@ -1,7 +1,7 @@
 {
     "name": "SmokeFieldApp",
     "short_name": "SmokeField",
-    "start_url": "./page/index.html",
+    "start_url": "/page/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
