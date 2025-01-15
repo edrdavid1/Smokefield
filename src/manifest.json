@@ -1,7 +1,7 @@
 {
     "name": "SmokeFieldApp",
     "short_name": "SFA",
-    "start_url": "/src/page/index.html",
+    "start_url": "./page/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
@@ -12,7 +12,7 @@
             "type": "image/png"
         },
         {
-            "src": "manifest.json",
+            "src": "icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
