@@ -6,7 +6,7 @@ const closeScanButton = document.getElementById("closeScanButton");
 const scannerContainer = document.getElementById("qr-code-scanner");
 const actualscore = document.getElementById("actualscore");
 const logoutBut = document.getElementById("logoutBut");
-
+const totalScoretext = document.getElementById("totalScore")
 
 let html5QrCode; 
 
@@ -39,30 +39,35 @@ const userDataApiFetch = async (username) => {
 
 
 const rangFunc = (total) => {
+    // Абнаўляюць агульны бал
+    totalScoretext.innerHTML = total;
+
     let rank;
 
+    // Умовы для вызначэння ранга
     if (total < 20) {
         rank = "Рядовой";
-    } else if (total > 50) {
+    } else if (total >= 20 && total < 50) {
         rank = "Ефрейтор";
-    } else if (total > 80) {
+    } else if (total >= 50 && total < 80) {
         rank = "Младший сержант";
-    } else if (total >  100) {
+    } else if (total >= 80 && total < 100) {
         rank = "Сержант";
-    } else if (total >  150) {
+    } else if (total >= 100 && total < 150) {
         rank = "Старший сержант";
-    } else if (total > 200) {
+    } else if (total >= 150 && total < 200) {
         rank = "Сержант первого класса";
-    } else if (total > 250) {
+    } else if (total >= 200 && total < 250) {
         rank = "Мастеровый сержант";
-    } else if (total > 300) {
+    } else if (total >= 250 && total < 300) {
         rank = "Первый сержант";
-    } else if (total > 400) {
+    } else if (total >= 300 && total < 400) {
         rank = "Сержант-майор";
     } else {
         rank = "Командирский сержант-майор";
     }
 
+    // Абнаўляем тэкст ранга
     rangtext.innerHTML = rank;
 };
 
@@ -149,6 +154,7 @@ closeScanButton.addEventListener("click", closeQRCodeScanner);
 
 async function initializeUserData() {
     try {
+        
         const user = await userDataApiFetch(username);
          actualscore.innerHTML = user.currentNum; // Выкарыстоўвайце user, а не users
         idtext.innerHTML = user.uniqecode; // Упэўніцеся, што user мае поле uniqecode
@@ -273,6 +279,18 @@ function actualscoreFun() {
 }
 
 initializeUserData();
+// JavaScript для адкрыцця меню
+document.getElementById("menuBut").addEventListener("click", function() {
+    var menu = document.getElementById("menu");
+    menu.style.transform = "translateX(0)"; // Адкрыць меню
+    menu.style.display = "block"; // Паказаць меню
+});
 
-
-    
+// JavaScript для закрыцця меню
+document.getElementById("closeMenu").addEventListener("click", function() {
+    var menu = document.getElementById("menu");
+    menu.style.transform = "translateX(-100%)"; // Схаваць меню
+    setTimeout(function() {
+        menu.style.display = "none"; // Схаваць меню пасля анімацыі
+    }, 300); // Пачакай 300 мс для завяршэння анімацыі
+});
