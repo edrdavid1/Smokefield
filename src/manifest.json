@@ -1,6 +1,6 @@
 {
     "name": "SmokeFieldApp",
-    "short_name": "SFA",
+    "short_name": "SmokeField",
     "start_url": "./page/index.html",
     "display": "standalone",
     "background_color": "#ffffff",

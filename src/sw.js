@@ -27,7 +27,7 @@ self.addEventListener("install", (event) => {
 // Перанакіраванне на loginpage.html
 self.addEventListener("fetch", (event) => {
     if (event.request.mode === "navigate" && event.request.url.endsWith("/")) {
-        event.respondWith(caches.match("/page/loginpage.html"));
+        event.respondWith(caches.match("/src/page/index.html"));
     } else {
         event.respondWith(
             caches.match(event.request).then((response) => {
