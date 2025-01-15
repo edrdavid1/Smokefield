@@ -13,7 +13,6 @@ const ASSETS = [
     "/assets/OperationNapalm-nRBWO.ttf"
 ];
 
-// Усталёўка Service Worker
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
@@ -24,7 +23,6 @@ self.addEventListener("install", (event) => {
     self.skipWaiting();
 });
 
-// Перанакіраванне на loginpage.html
 self.addEventListener("fetch", (event) => {
     if (event.request.mode === "navigate" && event.request.url.endsWith("/")) {
         event.respondWith(caches.match("/page/index.html"));
@@ -37,7 +35,6 @@ self.addEventListener("fetch", (event) => {
     }
 });
 
-// Ачыстка старых кэшаў
 self.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
