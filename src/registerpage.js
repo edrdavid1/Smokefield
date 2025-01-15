@@ -12,15 +12,14 @@ document.getElementById("registerForm").addEventListener("submit", async functio
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password, name })  // Дадаем name у запыт
+            body: JSON.stringify({ username, password, name, email })  // Fix: changed 'emeil' to 'email'
         });
 
         const data = await response.json();
 
         if (response.ok) {
-            window.location.href = 'index.html'
+            window.location.href = 'index.html';
             alert('Registration successful! Please check your email to confirm your account.');
-            
         } else {
             alert(data.message || 'Registration failed. Please try again.');
         }
@@ -29,3 +28,4 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         alert('Error during registration. Please try again.');
     }
 });
+

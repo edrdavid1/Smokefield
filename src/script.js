@@ -289,8 +289,8 @@ document.getElementById("menuBut").addEventListener("click", function() {
 // JavaScript для закрыцця меню
 document.getElementById("closeMenu").addEventListener("click", function() {
     var menu = document.getElementById("menu");
-    menu.style.transform = "translateX(-100%)"; // Схаваць меню
+    menu.style.transform = "translateX(-100%)"; 
     setTimeout(function() {
-        menu.style.display = "none"; // Схаваць меню пасля анімацыі
-    }, 300); // Пачакай 300 мс для завяршэння анімацыі
+        menu.style.display = "none"; 
+    }, 300); 
 });
