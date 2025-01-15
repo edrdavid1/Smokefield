@@ -28,6 +28,27 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     }
 });
 
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Блакуем стандартнае падзею, каб не паказваць стандартны дыялог
+    e.preventDefault();
+    deferredPrompt = e;
+
+    // Паказваем кнопку ўстаноўкі
+    const installButton = document.getElementById('installButton');
+    installButton.style.display = 'block';
+
+    installButton.addEventListener('click', () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            console.log(choiceResult.outcome);
+            deferredPrompt = null;
+        });
+    });
+});
+
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('../sw.js')
