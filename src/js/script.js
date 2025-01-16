@@ -9,7 +9,7 @@ const logoutBut = document.getElementById("logoutBut");
 const totalScoretext = document.getElementById("totalScore")
 const mainBut = document.getElementById("mainBut");
 const enterTextButton = document.getElementById("enterTextButton")
-const enterUsername = document.getElementById("enterUsername")
+const enterUsername = document.getElementById("enterUsername");
 const input_container = document.getElementById("input-container");
 const closeEnterButton = document.getElementById("closeEnterButton")
 const username = localStorage.getItem('username');
@@ -294,7 +294,7 @@ startScanButton.addEventListener("click", async () => {
 });
 
 enterUsernameText.addEventListener("click", () => {
-    bumСigarette(document.getElementById("enterUsername").value, username)
+    bumСigarette(document.getElementById("enterUsername").value.toLowerCase(), username)
     input_container.style.display = "none";
     backMain();
 });

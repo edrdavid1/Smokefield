@@ -1,7 +1,7 @@
 document.getElementById("loginForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const username = document.getElementById("loginUsername").value; // Замяняем на юзернэйм
+    const username = document.getElementById("loginUsername").value.toLowerCase(); // Замяняем на юзернэйм
     const password = document.getElementById("loginPassword").value;
 
     try {

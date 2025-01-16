@@ -1,19 +1,25 @@
-let registeredEmail = ""; // Дадаем глабальную зменную для захоўвання email
-
 document.getElementById("registerForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const username = document.getElementById("registerName").value;
-    const name = document.getElementById("registerName").value;
-    const email = document.getElementById("registerEmail").value;
+    // Атрыманне дадзеных з формы
+    const usernameInput = document.getElementById("registerName").value;
+    const emailInput = document.getElementById("registerEmail").value;
     const password = document.getElementById("registerPassword").value;
 
+    // Зводзім да ніжняга рэгістру
+    const username = usernameInput.toLowerCase();
+    const name = usernameInput; // Калі name і username павінны быць рознымі, змяніце адпаведна
+    const email = emailInput.toLowerCase();
+
+    // Праверка, ці ўсе палі запоўнены
     if (!username || !name || !email || !password) {
-      
+        document.getElementById("errorMessage").textContent = 'Усе палі абавязковыя для запаўнення.';
+        document.getElementById("errorMessage").style.display = 'block';
         return;
     }
 
-    registeredEmail = email;  // Захоўваем email у глабальную зменную
+    // Захоўваем email для пацверджання
+    registeredEmail = email;
 
     try {
         const response = await fetch('https://smokefieldserver.onrender.com/register', {
@@ -21,24 +27,31 @@ document.getElementById("registerForm").addEventListener("submit", async functio
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password, name, email })
+            body: JSON.stringify({ 
+                username, 
+                password, 
+                name, 
+                email 
+            }),
         });
 
         const data = await response.json();
 
         if (response.ok) {
-           
             // Паказваем акно для ўводу кода
             document.getElementById("registerForm").style.display = 'none';
             document.getElementById("confirmationCodeSection").style.display = 'block';
         } else {
-            alert(data.message || 'Registration failed. Please try again.');
+            document.getElementById("errorMessage").textContent = data.message || 'Рэгістрацыя не ўдалася. Паспрабуйце зноў.';
+            document.getElementById("errorMessage").style.display = 'block';
         }
     } catch (error) {
         console.error('Error during registration:', error);
-      
+        document.getElementById("errorMessage").textContent = 'Адбылася памылка. Паспрабуйце пазней.';
+        document.getElementById("errorMessage").style.display = 'block';
     }
 });
+
 
 document.getElementById("confirmEmailButton").addEventListener("click", async function () {
     const confirmationCode = document.getElementById("confirmationCode").value;
