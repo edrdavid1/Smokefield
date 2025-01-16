@@ -17,6 +17,7 @@ const enterUsernameText = document.getElementById("enterUsernameText");
 
 // console.log(username);
 
+
 let html5QrCode;
 let cameraWork = true;
 let receivedCig = 0;

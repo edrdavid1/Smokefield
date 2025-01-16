@@ -13,6 +13,7 @@ const ASSETS = [
     "/assets/OperationNapalm-nRBWO.ttf"
 ];
 
+// Падзея ўстаноўкі (install)
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
@@ -20,33 +21,49 @@ self.addEventListener("install", (event) => {
             return cache.addAll(ASSETS);
         })
     );
-    self.skipWaiting();
+    self.skipWaiting(); // Актываваць новы Service Worker адразу
 });
 
-self.addEventListener("fetch", (event) => {
-    if (event.request.mode === "navigate" && event.request.url.endsWith("/")) {
-        event.respondWith(caches.match("/page/index.html"));
-    } else {
-        event.respondWith(
-            caches.match(event.request).then((response) => {
-                return response || fetch(event.request);
-            })
-        );
-    }
-});
-
+// Падзея актывацыі (activate)
 self.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
-                cacheNames.map((cache) => {
-                    if (cache !== CACHE_NAME) {
-                        console.log("Выдаляю стары кэш:", cache);
-                        return caches.delete(cache);
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        console.log("Выдаляю стары кэш:", cacheName);
+                        return caches.delete(cacheName); // Выдаліць старыя кэшы
                     }
                 })
             );
         })
     );
-    self.clients.claim();
+    self.clients.claim(); // Забяспечыць актывацыю новага SW без перазагрузкі
+});
+
+// Падзея атрымання рэсурсаў (fetch)
+self.addEventListener("fetch", (event) => {
+    event.respondWith(
+        caches.match(event.request).then((cachedResponse) => {
+            const fetchPromise = fetch(event.request).then((networkResponse) => {
+                // Абнаўляем кэш пасля атрымання адказу ад сервера
+                if (networkResponse && event.request.url.indexOf("http") === 0) {
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, networkResponse.clone());
+                    });
+                }
+                return networkResponse;
+            });
+
+            // Вяртаем адказ з кэша, калі ёсць, але таксама абнаўляем яго ў фону
+            return cachedResponse || fetchPromise;
+        })
+    );
+});
+
+// Падзея для абнаўлення Service Worker
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.action === 'skipWaiting') {
+        self.skipWaiting(); // Прыняць новы Service Worker
+    }
 });

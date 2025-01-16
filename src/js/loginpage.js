@@ -53,10 +53,26 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('../swt.js')
             .then((registration) => {
-                console.log('Service Worker registered with scope: ', registration.scope);
+                console.log('Service Worker зарэгістраваны з абсягам: ', registration.scope);
+                registration.onupdatefound = () => {
+                    const installingWorker = registration.installing;
+
+                    installingWorker.onstatechange = () => {
+                        if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // Калі ёсць новая версія Service Worker
+                            console.log('Новая версія даступная!');
+
+                            // Паказаць карыстальніку паведамленне пра абнаўленне
+                            if (confirm('Існуе новая версія сайта. Хочаце абнавіць?')) {
+                                installingWorker.postMessage({ action: 'skipWaiting' });
+                            }
+                        }
+                    };
+                };
             })
             .catch((error) => {
-                console.log('Service Worker registration failed: ', error);
+                console.log('Рэгістрацыя Service Worker не ўдалася: ', error);
             });
     });
 }
+
