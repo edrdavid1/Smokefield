@@ -24,16 +24,11 @@
         </button>
     </div>
 
- 
     <div id="menu" style="display:none;">
-
         <h1 id="totalScore"></h1c>
         <h2>Отстреленно</h2>
-
         <button id="closeMenu">Назад</button>
-        <ul>
-            
-        </ul>
+        <ul></ul>
     </div>
 
     <div id="page">
@@ -44,18 +39,23 @@
         <div id="qrContener">
             <div id="qrcode"></div>
         </div>
+        <div id="input-container" style="display: none;">
+            <input type="text" id="enterUsername" placeholder="Введите Username">
+            <button id="enterUsernameText">Подтвердить</button>
+        </div>
         <h3 id="id"></h3>
         <text id="rang"></text>
         <button id="startScanButton">Стрельнуть</button>
-        <div id="qr-code-scanner" style="display:none;"></div> 
-        <button id="closeScanButton" style="display:none;">Закрыть сканер</button>
+        <div id="qr-code-scanner" style="display:none;"></div>
+        <div id="mainBut" style="display:none;">
+            <button id="closeScanButton" style="display: none;">Закрыть сканер</button>
+            <button id="enterTextButton">Ввести вручную</button>
+            <button id="closeEnterButton" style="display: none;">Закрыть</button>
+        </div>
     </div>
 
     <script src="../libs/html5-qrcode.min.js"></script>
     <script src="../libs/qrcode.min.js"></script>
     <script src="../js/script.js"></script>
-    <script>
-       
-    </script>
 </body>
 </html>

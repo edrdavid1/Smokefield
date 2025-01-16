@@ -7,18 +7,20 @@ const scannerContainer = document.getElementById("qr-code-scanner");
 const actualscore = document.getElementById("actualscore");
 const logoutBut = document.getElementById("logoutBut");
 const totalScoretext = document.getElementById("totalScore")
-
-let html5QrCode; 
-
-
-logoutBut.addEventListener("click", () => {
-    localStorage.removeItem('username');
-    window.location.href = '../page/index.html';
-});
-
+const mainBut = document.getElementById("mainBut");
+const enterTextButton = document.getElementById("enterTextButton")
+const enterUsername = document.getElementById("enterUsername")
+const input_container = document.getElementById("input-container");
+const closeEnterButton = document.getElementById("closeEnterButton")
 const username = localStorage.getItem('username');
+const enterUsernameText = document.getElementById("enterUsernameText");
 
-console.log(username);
+// console.log(username);
+
+let html5QrCode;
+let cameraWork = true;
+let receivedCig = 0;
+let socket;
 
 const userDataApiFetch = async (username) => {
     try {
@@ -36,15 +38,9 @@ const userDataApiFetch = async (username) => {
         throw error;
     }
 };
-
-
 const rangFunc = (total) => {
-    // Абнаўляюць агульны бал
     totalScoretext.innerHTML = total;
-
     let rank;
-
-    // Умовы для вызначэння ранга
     if (total < 20) {
         rank = "Рядовой";
     } else if (total >= 20 && total < 50) {
@@ -66,12 +62,8 @@ const rangFunc = (total) => {
     } else {
         rank = "Командирский сержант-майор";
     }
-
-    // Абнаўляем тэкст ранга
     rangtext.innerHTML = rank;
 };
-
-
 
 function generateQRCode(text) {
     if (typeof text !== "string" || !text.trim()) {
@@ -79,7 +71,6 @@ function generateQRCode(text) {
         return;
     }
     qrcodeContainer.innerHTML = "";
-
     new QRCode(qrcodeContainer, {
         text: text,
         width: 270,
@@ -91,12 +82,14 @@ function generateQRCode(text) {
 }
 
 function startQRCodeScanner(user) {
+    closeScanButton.style.display = "block";
     startScanButton.style.display = "none";
     idtext.style.display = "none";
     qrcodeContainer.style.display = "none";
     rangtext.style.display = "none";
-    closeScanButton.style.display = "block";
+    mainBut.style.display = "block";
     scannerContainer.style.display = "block";
+    closeEnterButton.style.display = "none";
 
     html5QrCode = new Html5Qrcode("qr-code-scanner");
 
@@ -104,62 +97,59 @@ function startQRCodeScanner(user) {
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
         (decodedText) => {
-            console.log("Сканаваны тэкст:", decodedText);
+            // console.log("Сканаваны тэкст:", decodedText);
             stopQRCodeScanner();
-            bumСigarette(decodedText, username); 
-            
+            bumСigarette(decodedText, username);
         },
         (errorMessage) => {
-            console.error("Памылка сканавання:", errorMessage);
+            cameraWork = true;
+            // console.log("Памылка сканавання:", errorMessage);
         }
     ).catch(err => {
-        console.log("Памылка запуску сканера", err);
+        cameraWork = false;
+        // console.log("Памылка запуску сканера", err);
     });
 }
-
 
 function stopQRCodeScanner() {
     if (html5QrCode) {
         html5QrCode.stop()
             .then(() => {
-                scannerContainer.style.display = "none";
-                startScanButton.style.display = "block";
-                idtext.style.display = "block";
-                rangtext.style.display = "block";
-                qrcodeContainer.style.display = "flex";
-                closeScanButton.style.display = "none";
+                backMain();
             })
             .catch(err => {
-                console.log("Памылка спынення сканера", err);
+                // console.log("Памылка спынення сканера", err);
             });
     }
 }
 
-
-function closeQRCodeScanner() {
-    stopQRCodeScanner();
+function backMain(){
+    scannerContainer.style.display = "none";
+    startScanButton.style.display = "block";
+    idtext.style.display = "block";
+    rangtext.style.display = "block";
+    qrcodeContainer.style.display = "flex";
+    mainBut.style.display = "none";
 }
 
+function checkCamera(){
+    if (cameraWork) {
+        html5QrCode.stop()
+    }
+}
 
-
-startScanButton.addEventListener("click", async () => {
-    const users = await userDataApiFetch(username);
-    const user = users[0];
-    startQRCodeScanner(user);
-});
-
-
-closeScanButton.addEventListener("click", closeQRCodeScanner);
-
+function closeQRCodeScanner() {
+    checkCamera();
+    backMain();
+}
 
 async function initializeUserData() {
     try {
-        
         const user = await userDataApiFetch(username);
-         actualscore.innerHTML = user.currentNum; // Выкарыстоўвайце user, а не users
-        idtext.innerHTML = user.uniqecode; // Упэўніцеся, што user мае поле uniqecode
-        rangFunc(user.totalNum); // Упэўніцеся, што user мае поле totalNum
-        generateQRCode(user.uniqecode); // Генерацыя QR кода
+        actualscore.innerHTML = user.currentNum;
+        idtext.innerHTML = user.uniqecode;
+        rangFunc(user.totalNum);
+        generateQRCode(user.uniqecode);
     } catch (error) {
         console.error("Памылка ініцыялізацыі дадзеных карыстальніка:", error);
     }
@@ -167,17 +157,11 @@ async function initializeUserData() {
 
 
 
-
-
-
-let receivedCig = 0; 
-
 function sendBumData(user, ggId) {
     const dataToSend = {
         userGG: ggId,
         userBB: user
     };
-
     return fetch("https://smokefieldserver.onrender.com/updateuser", {
         method: "POST",
         headers: {
@@ -192,7 +176,7 @@ function sendBumData(user, ggId) {
         return response.json();
     })
     .then(data => {
-        console.log("Адказ сервера:", data);
+        // console.log("Адказ сервера:", data);
         return data;
     })
     .catch(error => {
@@ -204,13 +188,11 @@ function sendBumData(user, ggId) {
 function bumСigarette(decodedText, username) {
     sendBumData(username, decodedText)
         .then(() => {
-            console.log("Дадзеныя паспяхова адпраўлены.");
+            // console.log("Дадзеныя паспяхова адпраўлены.");
         })
         .catch(error => {
             console.error("Памылка адпраўкі дадзеных:", error);
         });
-
-    // Адпраўляем цыгарэту
     if (socket) {
         sendCig(socket, decodedText, 1);
     } else {
@@ -218,39 +200,29 @@ function bumСigarette(decodedText, username) {
     }
 }
 
-let socket; 
+
 
 function setupWebSocket(userId) {
     socket = new WebSocket("wss://smokefieldserver.onrender.com");
-
-
     socket.onopen = () => {
         console.log("WebSocket падключаны.");
         socket.send(JSON.stringify({ type: 'register', userId }));
     };
-
     socket.onmessage = (event) => {
         const messageData = JSON.parse(event.data);
         console.log("Паведамленне ад сервера:", messageData);
-
-        // Калі атрымана значэнне цыгарэты
         if (messageData.cig !== undefined) {
-            receivedCig = messageData.cig; // Захоўваем значэнне ў пераменную
-            console.log("Атрыманае значэнне:", receivedCig);
-
-            // Абнаўляем інтэрфейс пры неабходнасці
+            receivedCig = messageData.cig;
+            // console.log("Атрыманае значэнне:", receivedCig);
             actualscore.innerHTML = parseInt(actualscore.innerHTML) + receivedCig;
         }
     };
-
     socket.onclose = () => {
         console.log("WebSocket адключаны.");
     };
-
     socket.onerror = (error) => {
         console.error("Памылка WebSocket:", error);
     };
-
     return socket;
 }
 
@@ -260,37 +232,70 @@ function sendCig(socket, userGG, cigValue) {
         userGG,
         cig: cigValue
     };
-
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(dataToSend));
-        console.log("Даныя адпраўлены:", dataToSend);
-        actualscoreFun()
+        // console.log("Даныя адпраўлены:", dataToSend);
+        actualscoreFun();
     } else {
         console.error("WebSocket не падключаны.");
     }
 }
 
-initializeUserData().then(() => {
-    setupWebSocket(username);
-});
-
 function actualscoreFun() {
     actualscore.innerHTML = actualscore.innerHTML - 1;
 }
 
-initializeUserData();
-// JavaScript для адкрыцця меню
+function enterText() {
+    enterTextButton.style.display = 'none';
+    closeEnterButton.style.display = "block";
+    closeScanButton.style.display = "none";
+    scannerContainer.style.display = "none";
+    input_container.style.display = "flex";
+}
+
+initializeUserData().then(() => {
+    setupWebSocket(username);
+});
+enterTextButton.addEventListener("click", function(){
+    checkCamera();
+    enterText();
+})
+
 document.getElementById("menuBut").addEventListener("click", function() {
     var menu = document.getElementById("menu");
-    menu.style.transform = "translateX(0)"; // Адкрыць меню
-    menu.style.display = "block"; // Паказаць меню
+    menu.style.transform = "translateX(0)";
+    menu.style.display = "block";
 });
 
-// JavaScript для закрыцця меню
 document.getElementById("closeMenu").addEventListener("click", function() {
     var menu = document.getElementById("menu");
-    menu.style.transform = "translateX(-100%)"; 
+    menu.style.transform = "translateX(-100%)";
     setTimeout(function() {
-        menu.style.display = "none"; 
-    }, 300); 
+        menu.style.display = "none";
+    }, 300);
 });
+
+
+closeEnterButton.addEventListener("click", function() {
+    input_container.style.display = "none";
+    backMain();
+});
+
+logoutBut.addEventListener("click", () => {
+    localStorage.removeItem('username');
+    window.location.href = '../page/index.html';
+});
+
+startScanButton.addEventListener("click", async () => {
+    enterTextButton.style.display = "block";
+    const users = await userDataApiFetch(username);
+    const user = users[0];
+    startQRCodeScanner(user);
+});
+
+enterUsernameText.addEventListener("click", () => {
+    bumСigarette(document.getElementById("enterUsername").value, username)
+    input_container.style.display = "none";
+    backMain();
+});
+closeScanButton.addEventListener("click", closeQRCodeScanner);
