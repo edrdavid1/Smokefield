@@ -17,7 +17,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
         if (response.ok) {
            
-            localStorage.setItem('username', username);
+            localStorage.setItem('username', username.toLowerCase());
             window.location.href = '../page/base.html'
         } else {
             alert(data.message || 'Login failed. Please check your credentials.');
