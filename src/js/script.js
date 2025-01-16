@@ -12,7 +12,7 @@ const enterTextButton = document.getElementById("enterTextButton")
 const enterUsername = document.getElementById("enterUsername");
 const input_container = document.getElementById("input-container");
 const closeEnterButton = document.getElementById("closeEnterButton")
-const username = localStorage.getItem('username');
+const username = localStorage.getItem('username').toLocaleLowerCase();
 const enterUsernameText = document.getElementById("enterUsernameText");
 
 // console.log(username);
