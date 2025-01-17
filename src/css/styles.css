@@ -253,3 +253,13 @@ body{
     background-color: #c0392b; /* Темніший червоний */
     transform: scale(1.05);
 }
+
+#policyBut{
+    position: absolute;
+    font-size: 14px;
+    color: #00a2ff;
+    text-decoration: underline;
+    cursor: pointer;
+    display: flex;
+    align-items:flex-end;
+}
